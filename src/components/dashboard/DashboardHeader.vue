@@ -2,9 +2,9 @@
   <header class="dashboard-header">
     <div>
       <p class="dashboard-header__kicker">Real-Time Operations Intelligence</p>
-      <h1>Live systems command center</h1>
+      <h1>Production control plane</h1>
       <p class="dashboard-header__summary">
-        Streaming infrastructure, security, product demand, and regional health in one operational view.
+        Live telemetry for checkout traffic, edge capacity, identity, payments, and security signals across the production fleet.
       </p>
     </div>
 

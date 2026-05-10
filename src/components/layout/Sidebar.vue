@@ -15,11 +15,11 @@
       </RouterLink>
       <button class="sidebar__link" type="button">
         <Server :size="18" aria-hidden="true" />
-        <span>Infrastructure</span>
+        <span>Fleet Health</span>
       </button>
       <button class="sidebar__link" type="button">
         <ShieldAlert :size="18" aria-hidden="true" />
-        <span>Security</span>
+        <span>Incidents</span>
       </button>
       <button class="sidebar__link" type="button">
         <Map :size="18" aria-hidden="true" />

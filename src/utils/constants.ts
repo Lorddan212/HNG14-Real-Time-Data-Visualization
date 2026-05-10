@@ -31,6 +31,26 @@ export const DATASET_LABELS: Record<DatasetKey, string> = {
   errors: 'Errors',
 };
 
-export const SERVICES = ['API Gateway', 'Auth', 'Billing', 'Telemetry', 'Search', 'Worker'];
-export const REGIONS = ['US-East', 'US-West', 'EU-Central', 'AP-South', 'Africa-West'];
-export const SOURCES = ['edge-node-04', 'kafka-stream', 'auth-cluster', 'siem-core', 'iot-bridge'];
+export const SERVICES = [
+  'edge-api',
+  'identity-service',
+  'checkout-api',
+  'payments-ledger',
+  'telemetry-ingest',
+  'search-indexer',
+  'event-worker',
+  'fraud-scoring',
+];
+
+export const REGIONS = ['us-east-1', 'us-west-2', 'eu-central-1', 'ap-south-1', 'af-south-1'];
+
+export const SOURCES = [
+  'eks-prod-a/ip-10-42-18-91',
+  'eks-prod-b/ip-10-53-07-44',
+  'edge-pop-lhr-02',
+  'edge-pop-iad-07',
+  'kafka-stream/orders.v3',
+  'redis-cluster-cache-02',
+  'aurora-reader-prod-01',
+  'waf-managed-ruleset',
+];

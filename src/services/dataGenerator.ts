@@ -41,6 +41,26 @@ function pick<T>(items: readonly T[]): T {
   return items[Math.floor(Math.random() * items.length)];
 }
 
+function makeTraceId(): string {
+  return `trace-${Math.random().toString(16).slice(2, 10)}-${Math.random().toString(16).slice(2, 6)}`;
+}
+
+function formatMetricValue(metric: string, value: number): string {
+  if (metric === 'errorRate' || metric === 'cpu') {
+    return `${value.toFixed(2)}%`;
+  }
+
+  if (metric === 'latency') {
+    return `${Math.round(value)} ms`;
+  }
+
+  if (metric === 'requestRate') {
+    return `${Math.round(value).toLocaleString('en-US')} req/min`;
+  }
+
+  return value.toFixed(2);
+}
+
 function walk(current: number, volatility: number, min: number, max: number): number {
   const seasonal = Math.sin(Date.now() / 18_000) * volatility * 0.35;
   return clamp(current + randomBetween(-volatility, volatility) + seasonal, min, max);
@@ -94,30 +114,34 @@ function makeEvent(timestamp: number, metrics: MetricSnapshot): StreamEvent {
   const source = pick(SOURCES);
   const region = pick(REGIONS);
 
-  const templates: Record<SeverityLevel, string[]> = {
+  const titles: Record<SeverityLevel, string[]> = {
     info: [
-      'Telemetry batch accepted',
-      'Cache synchronization completed',
-      'Regional heartbeat received',
-      'Autoscaling policy evaluated',
+      'Synthetic checkout probe passed',
+      'Kafka consumer lag within target',
+      'Edge cache warmup completed',
+      'Autoscaler evaluated capacity plan',
+      'Regional health check acknowledged',
     ],
     warning: [
-      'Latency approaching threshold',
-      'Elevated memory pressure detected',
-      'Traffic spike observed',
-      'Retry queue growing',
+      'P95 latency nearing SLO threshold',
+      'Retry queue depth rising',
+      'Memory pressure above forecast',
+      'Traffic shifted after edge imbalance',
+      'Database reader saturation detected',
     ],
     critical: [
-      'Error budget burn accelerated',
-      'Anomaly detected in auth flow',
-      'Packet loss crossed guardrail',
-      'Service saturation event',
+      'Error budget burn rate exceeded',
+      'Payment authorization failures spiking',
+      'WAF anomaly rule triggered',
+      'Packet loss crossed regional guardrail',
+      'Checkout dependency saturation event',
     ],
     success: [
-      'Failover drill passed',
-      'Queue depth normalized',
-      'Recovery action completed',
-      'Deployment health gate passed',
+      'Canary deployment health gate passed',
+      'Queue depth returned to baseline',
+      'Automated rollback completed',
+      'Replica promotion drill passed',
+      'Incident automation closed alert',
     ],
   };
 
@@ -137,24 +161,37 @@ function makeEvent(timestamp: number, metrics: MetricSnapshot): StreamEvent {
     cpu: metrics.cpu,
   };
 
+  const value = Number(valueMap[metric].toFixed(2));
+  const traceId = makeTraceId();
+  const metricText = formatMetricValue(metric, value);
+  const action =
+    severity === 'critical'
+      ? 'pager escalation created'
+      : severity === 'warning'
+        ? 'runbook check queued'
+        : severity === 'success'
+          ? 'automation marked healthy'
+          : 'observation stored';
+
   return {
     id: `evt-${timestamp}-${Math.random().toString(16).slice(2, 8)}`,
     timestamp,
-    title: pick(templates[severity]),
-    message: `${service} reported ${metric} at ${Number(valueMap[metric].toFixed(2))}`,
+    title: pick(titles[severity]),
+    message: `${service} in ${region} reported ${metricText} for ${metric}; ${action} (${traceId})`,
     severity,
     source,
     region,
     service,
     metric,
-    value: Number(valueMap[metric].toFixed(2)),
+    value,
   };
 }
 
 function makeServices(metrics: MetricSnapshot): ServiceLoad[] {
   return SERVICES.map((service, index) => {
     const trafficBias = 1 + index * 0.09;
-    const errorBias = service === 'Auth' && metrics.errorRate > 2 ? 1.8 : 1;
+    const checkoutBias = service.includes('checkout') || service.includes('payments') ? 1.35 : 1;
+    const errorBias = service.includes('identity') && metrics.errorRate > 2 ? 1.8 : checkoutBias;
 
     return {
       service,

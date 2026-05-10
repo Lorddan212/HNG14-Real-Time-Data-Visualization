@@ -11,3 +11,12 @@
 [2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
 [2m6:57:35 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mindex.html[22m
 [2m7:01:39 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/dashboard/ControlPanel.vue, /src/views/DashboardView.vue[22m
+[2m7:42:53 PM[22m [36m[1m[vite][22m[39m changed tsconfig file detected: C:/Users/HP/Desktop/Project/My Work/HNG14 Real Time Data Visualization/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+[2m7:52:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/dashboard/ControlPanel.vue, /src/components/dashboard/ActivityFeed.vue, /src/views/DashboardView.vue, /src/components/dashboard/InsightPanel.vue, /src/components/dashboard/DashboardHeader.vue, /src/components/layout/Topbar.vue[22m
+[2m7:52:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/dashboard/ControlPanel.vue, /src/views/DashboardView.vue[22m
+[2m7:52:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/dashboard/DashboardHeader.vue[22m
+[2m7:52:07 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/layout/Topbar.vue[22m
+[2m7:52:08 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/layout/Sidebar.vue[22m
+[2m7:52:08 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/dashboard/ActivityFeed.vue[22m
+[2m7:52:08 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/components/dashboard/InsightPanel.vue[22m
+[2m7:59:56 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mindex.html[22m

@@ -3,7 +3,7 @@
     <header class="panel-header">
       <div>
         <p class="eyebrow">Activity Feed</p>
-        <h2>Live events and alerts</h2>
+        <h2>Production events and alerts</h2>
       </div>
       <span class="panel-header__count">{{ rows.length }} visible</span>
     </header>

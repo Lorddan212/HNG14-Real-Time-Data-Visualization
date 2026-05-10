@@ -3,7 +3,7 @@
     <header class="panel-header">
       <div>
         <p class="eyebrow">Insights</p>
-        <h2>Operational signals</h2>
+        <h2>SLO and fleet signals</h2>
       </div>
     </header>
 
@@ -39,7 +39,7 @@
     </div>
 
     <div class="insight-panel__section">
-      <h3>Latest stream hygiene</h3>
+      <h3>Stream validation</h3>
       <p v-if="stream.rejectedPayloads.length === 0" class="insight-panel__muted">
         All recent payloads passed validation.
       </p>

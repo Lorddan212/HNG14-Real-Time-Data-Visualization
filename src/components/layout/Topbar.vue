@@ -1,8 +1,8 @@
 <template>
   <header class="topbar">
     <div>
-      <span class="topbar__label">Operations Intelligence</span>
-      <strong>Real-time analytics workspace</strong>
+      <span class="topbar__label">Northstar Commerce</span>
+      <strong>Production operations workspace</strong>
     </div>
 
     <div class="topbar__actions">
