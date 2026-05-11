@@ -38,7 +38,7 @@
     </section>
 
     <section class="analytics-grid analytics-grid--balanced" aria-label="Regional analytics">
-      <Card class="chart-panel">
+      <Card class="chart-panel chart-panel--full">
         <LiveAreaChart
           :points="filteredMetrics"
           :visible="dashboard.visibleDatasets"
