@@ -81,7 +81,7 @@ const datasetKeys: DatasetKey[] = ['cpu', 'memory', 'network', 'users', 'request
 const datasetLabels = DATASET_LABELS;
 
 const severityOptions = [
-  { label: 'All severities', value: 'all' },
+  { label: 'All Severities', value: 'all' },
   { label: 'Critical', value: 'critical' },
   { label: 'Warning', value: 'warning' },
   { label: 'Info', value: 'info' },
@@ -89,8 +89,8 @@ const severityOptions = [
 ];
 
 const chartModeOptions = [
-  { label: 'Smooth charts', value: 'smooth' },
-  { label: 'Stepped charts', value: 'stepped' },
+  { label: 'Smooth Charts', value: 'smooth' },
+  { label: 'Stepped Charts', value: 'stepped' },
 ];
 
 const search = ref(dashboard.filters.search);

@@ -3,7 +3,7 @@
     <header class="chart-shell__header">
       <div>
         <p class="eyebrow">Demand</p>
-        <h2>Users, requests & errors</h2>
+        <h2>Users, Requests & Errors</h2>
       </div>
       <span class="chart-shell__meta">area</span>
     </header>

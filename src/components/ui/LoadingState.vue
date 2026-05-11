@@ -11,7 +11,7 @@ withDefaults(
     message?: string;
   }>(),
   {
-    message: 'Waiting for live telemetry...',
+    message: 'Waiting For Live Telemetry...',
   },
 );
 </script>

@@ -2,7 +2,7 @@
   <header class="topbar">
     <div>
       <span class="topbar__label">Northstar Commerce</span>
-      <strong>Production operations workspace</strong>
+      <strong>Production Operations Workspace</strong>
     </div>
 
     <div class="topbar__actions">

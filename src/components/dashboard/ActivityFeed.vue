@@ -3,14 +3,14 @@
     <header class="panel-header">
       <div>
         <p class="eyebrow">Activity Feed</p>
-        <h2>Production events and alerts</h2>
+        <h2>Production Events And Alerts</h2>
       </div>
       <span class="panel-header__count">{{ rows.length }} visible</span>
     </header>
 
     <EmptyState
       v-if="rows.length === 0"
-      title="No events match this view"
+      title="No Events Match This View"
       message="Try another severity, clear search, or wait for a new stream event."
     />
 

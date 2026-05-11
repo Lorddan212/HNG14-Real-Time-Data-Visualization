@@ -3,7 +3,7 @@
     <header class="chart-shell__header">
       <div>
         <p class="eyebrow">Live Trend</p>
-        <h2>CPU, memory & network</h2>
+        <h2>CPU, Memory & Network</h2>
       </div>
       <span class="chart-shell__meta">{{ points.length }} pts</span>
     </header>

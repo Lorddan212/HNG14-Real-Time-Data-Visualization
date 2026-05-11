@@ -2,7 +2,7 @@
   <header class="dashboard-header">
     <div>
       <p class="dashboard-header__kicker">Real-Time Operations Intelligence</p>
-      <h1>Production control plane</h1>
+      <h1>Production Control Plane</h1>
       <p class="dashboard-header__summary">
         Live telemetry for checkout traffic, edge capacity, identity, payments, and security signals across the production fleet.
       </p>
@@ -10,15 +10,15 @@
 
     <div class="dashboard-header__stats">
       <div>
-        <span>Last heartbeat</span>
-        <strong>{{ formatRelativeTime(stream.lastHeartbeat) }}</strong>
+        <span>Last Heartbeat</span>
+        <strong class="heartbeat-value">{{ formatRelativeTime(stream.lastHeartbeat) }}</strong>
       </div>
       <div>
-        <span>Critical alerts</span>
-        <strong>{{ dashboard.criticalEventCount }}</strong>
+        <span>Active Criticals</span>
+        <strong>{{ dashboard.activeCriticalCount }}</strong>
       </div>
       <div>
-        <span>Rejected payloads</span>
+        <span>Rejected Payloads</span>
         <strong>{{ stream.rejectedPayloads.length }}</strong>
       </div>
     </div>

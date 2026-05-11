@@ -1,35 +1,35 @@
 <template>
   <aside class="sidebar" aria-label="Primary navigation">
-    <RouterLink class="sidebar__brand" to="/" aria-label="Operations dashboard home">
-      <span class="sidebar__mark">OI</span>
+    <RouterLink class="sidebar__brand" to="/" aria-label="Northstar Commerce operations home">
+      <span class="sidebar__mark">NS</span>
       <span>
-        <strong>OpsIntel</strong>
-        <small>Command</small>
+        <strong>NorthStar</strong>
+        <small>Prod Control</small>
       </span>
     </RouterLink>
 
     <nav class="sidebar__nav">
-      <RouterLink class="sidebar__link sidebar__link--active" to="/">
+      <RouterLink class="sidebar__link" to="/">
         <LayoutDashboard :size="18" aria-hidden="true" />
         <span>Overview</span>
       </RouterLink>
-      <button class="sidebar__link" type="button">
+      <RouterLink class="sidebar__link" to="/fleet">
         <Server :size="18" aria-hidden="true" />
         <span>Fleet Health</span>
-      </button>
-      <button class="sidebar__link" type="button">
+      </RouterLink>
+      <RouterLink class="sidebar__link" to="/incidents">
         <ShieldAlert :size="18" aria-hidden="true" />
         <span>Incidents</span>
-      </button>
-      <button class="sidebar__link" type="button">
+      </RouterLink>
+      <RouterLink class="sidebar__link" to="/regions">
         <Map :size="18" aria-hidden="true" />
         <span>Regions</span>
-      </button>
+      </RouterLink>
     </nav>
 
     <div class="sidebar__footer">
       <span class="sidebar__pulse" />
-      <span>Live telemetry</span>
+      <span>Live Telemetry</span>
     </div>
   </aside>
 </template>

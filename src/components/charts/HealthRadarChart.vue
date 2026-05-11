@@ -3,7 +3,7 @@
     <header class="chart-shell__header">
       <div>
         <p class="eyebrow">Resilience</p>
-        <h2>System health</h2>
+        <h2>System Health</h2>
       </div>
       <span class="chart-shell__meta">{{ averageScore }}%</span>
     </header>
