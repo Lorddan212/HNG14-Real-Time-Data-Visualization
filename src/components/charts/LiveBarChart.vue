@@ -3,7 +3,7 @@
     <header class="chart-shell__header">
       <div>
         <p class="eyebrow">Distribution</p>
-        <h2>Service traffic</h2>
+        <h2>Service Traffic</h2>
       </div>
       <span class="chart-shell__meta">{{ services.length }} svc</span>
     </header>

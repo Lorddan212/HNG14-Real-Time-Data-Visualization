@@ -46,8 +46,10 @@ export const useDashboardStore = defineStore('dashboard', {
     },
     filteredEvents: (state) => {
       const query = state.filters.search.trim().toLowerCase();
+      const cutoff = Date.now() - TIME_RANGES[state.filters.timeRange].value;
 
       return state.events.filter((event) => {
+        const timeMatches = event.timestamp >= cutoff;
         const severityMatches = state.filters.severity === 'all' || event.severity === state.filters.severity;
         const searchMatches =
           query.length === 0 ||
@@ -57,11 +59,17 @@ export const useDashboardStore = defineStore('dashboard', {
           event.region.toLowerCase().includes(query) ||
           event.source.toLowerCase().includes(query);
 
-        return severityMatches && searchMatches;
+        return timeMatches && severityMatches && searchMatches;
       });
     },
-    criticalEventCount: (state) => state.events.filter((event) => event.severity === 'critical').length,
-    warningEventCount: (state) => state.events.filter((event) => event.severity === 'warning').length,
+    activeCriticalCount: (state) => {
+      const cutoff = Date.now() - TIME_RANGES[state.filters.timeRange].value;
+      return state.events.filter((event) => event.timestamp >= cutoff && event.severity === 'critical').length;
+    },
+    activeWarningCount: (state) => {
+      const cutoff = Date.now() - TIME_RANGES[state.filters.timeRange].value;
+      return state.events.filter((event) => event.timestamp >= cutoff && event.severity === 'warning').length;
+    },
   },
   actions: {
     ingest(payload: StreamPayload) {

@@ -3,7 +3,7 @@
     <header class="panel-header">
       <div>
         <p class="eyebrow">Insights</p>
-        <h2>SLO and fleet signals</h2>
+        <h2>SLO And Fleet Signals</h2>
       </div>
     </header>
 
@@ -13,19 +13,19 @@
         <StatusBadge :status="stream.status" />
       </div>
       <div class="insight-row">
-        <span>Warnings</span>
-        <strong>{{ dashboard.warningEventCount }}</strong>
+        <span>Active Warnings</span>
+        <strong>{{ dashboard.activeWarningCount }}</strong>
       </div>
       <div class="insight-row">
-        <span>Rejected payloads</span>
+        <span>Rejected Payloads</span>
         <strong>{{ stream.rejectedPayloads.length }}</strong>
       </div>
     </div>
 
     <div class="insight-panel__section">
-      <h3>Regional activity</h3>
+      <h3>Regional Activity</h3>
       <ul class="region-list">
-        <li v-for="region in normalizedRegions" :key="region.region" class="region-list__item">
+        <li v-for="region in topRegions" :key="region.region" class="region-list__item">
           <div class="region-list__label">
             <span>{{ region.region }}</span>
             <strong>{{ formatCompact(region.activity) }}</strong>
@@ -36,10 +36,13 @@
           <small>{{ region.latency }} ms latency &middot; {{ region.errors }} errors</small>
         </li>
       </ul>
+      <p v-if="remainingRegionCount > 0" class="insight-panel__muted">
+        {{ remainingRegionCount }} additional regions reporting normally.
+      </p>
     </div>
 
     <div class="insight-panel__section">
-      <h3>Stream validation</h3>
+      <h3>Stream Validation</h3>
       <p v-if="stream.rejectedPayloads.length === 0" class="insight-panel__muted">
         All recent payloads passed validation.
       </p>
@@ -71,4 +74,10 @@ const normalizedRegions = computed(() => {
     normalized: Math.max(6, Math.round((region.activity / maxActivity) * 100)),
   }));
 });
+
+const topRegions = computed(() => {
+  return [...normalizedRegions.value].sort((a, b) => b.activity - a.activity).slice(0, 8);
+});
+
+const remainingRegionCount = computed(() => Math.max(0, dashboard.regions.length - topRegions.value.length));
 </script>

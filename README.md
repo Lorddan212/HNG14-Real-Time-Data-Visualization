@@ -62,6 +62,7 @@ src/
   styles/              Global design system CSS
   types/               Shared TypeScript data models
   utils/               Constants, formatters, and performance helpers
+  views/               Overview, fleet health, incidents, and regions pages
 ```
 
 ## Data Streaming Approach
@@ -112,3 +113,12 @@ Derived data such as filtered events and time-range metric series is exposed thr
 - The stream is mocked locally rather than backed by a real WebSocket. The service API is intentionally WebSocket-like so it can be replaced later.
 - The activity feed uses bounded rendering instead of full virtualization to keep the dependency surface lean while still protecting performance.
 - The 1-hour time range works as the stream accumulates data during the session; historical persistence is not included.
+
+## Future Improvements
+
+- Replace the mock stream with a real authenticated WebSocket or Server-Sent Events source.
+- Persist user layout, theme, time range, and dataset preferences.
+- Add incident assignment, acknowledgement, and runbook links.
+- Add chart annotations for deployments, failovers, and security events.
+- Add saved views for SRE, security, revenue operations, and regional teams.
+- Add true row virtualization if the activity feed grows beyond the current bounded live window.

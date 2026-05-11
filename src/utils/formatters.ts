@@ -47,7 +47,7 @@ export function formatRelativeTime(timestamp?: number | null): string {
   const deltaSeconds = Math.max(0, Math.round((Date.now() - timestamp) / 1000));
 
   if (deltaSeconds < 5) {
-    return 'just now';
+    return 'Just Now';
   }
 
   if (deltaSeconds < 60) {

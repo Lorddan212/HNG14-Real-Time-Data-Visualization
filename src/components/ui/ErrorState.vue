@@ -12,7 +12,7 @@ withDefaults(
     message: string;
   }>(),
   {
-    title: 'Stream notice',
+    title: 'Stream Notice',
   },
 );
 </script>

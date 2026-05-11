@@ -12,7 +12,7 @@ withDefaults(
     message?: string;
   }>(),
   {
-    title: 'No matching data',
+    title: 'No Matching Data',
     message: 'Adjust filters or resume the stream to populate this view.',
   },
 );
