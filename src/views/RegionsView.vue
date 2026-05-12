@@ -37,6 +37,30 @@
       </Card>
     </section>
 
+    <Card class="region-heatmap-card">
+      <header class="panel-header">
+        <div>
+          <p class="eyebrow">Heatmap</p>
+          <h2>Regional intensity map</h2>
+        </div>
+        <span class="panel-header__count">activity + errors + latency</span>
+      </header>
+
+      <div class="region-heatmap" aria-label="Regional activity heatmap">
+        <button
+          v-for="region in heatmapRegions"
+          :key="region.region"
+          class="region-heatmap__cell"
+          type="button"
+          :style="{ backgroundColor: heatColor(region.heatScore), borderColor: heatBorder(region.heatScore) }"
+          :title="`${region.region}: ${region.activity} active, ${region.errors} errors, ${region.latency} ms p95`"
+        >
+          <strong>{{ region.region }}</strong>
+          <span>{{ region.heatScore }} intensity</span>
+        </button>
+      </div>
+    </Card>
+
     <section class="analytics-grid analytics-grid--balanced" aria-label="Regional analytics">
       <Card class="chart-panel chart-panel--full">
         <LiveAreaChart
@@ -74,4 +98,27 @@ const normalizedRegions = computed(() => {
     normalized: Math.max(8, Math.round((region.activity / maxActivity) * 100)),
   }));
 });
+
+const heatmapRegions = computed(() => {
+  return normalizedRegions.value.map((region) => {
+    const errorPressure = Math.min(35, region.errors * 2.4);
+    const latencyPressure = Math.min(30, region.latency / 7);
+    const activityPressure = region.normalized * 0.35;
+
+    return {
+      ...region,
+      heatScore: Math.min(100, Math.round(activityPressure + errorPressure + latencyPressure)),
+    };
+  });
+});
+
+function heatColor(score: number): string {
+  const hue = Math.max(0, 145 - score * 1.25);
+  return `hsla(${hue}, 78%, 46%, 0.2)`;
+}
+
+function heatBorder(score: number): string {
+  const hue = Math.max(0, 145 - score * 1.25);
+  return `hsla(${hue}, 78%, 42%, 0.42)`;
+}
 </script>

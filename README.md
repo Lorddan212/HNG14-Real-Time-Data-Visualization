@@ -10,10 +10,12 @@ A production-minded Vue 3 + TypeScript real-time analytics dashboard for streami
 - Live CPU, memory, network, active user, request, error, latency, service, health, and AWS-style regional activity signals.
 - ECharts line, area, bar, and radar visualizations with tooltips, smooth updates, responsive resizing, and dataset toggles.
 - TanStack Table-powered activity feed with search, severity filtering, newest-first ordering, and bounded history.
+- Incident workbench with acknowledgement actions, active runbook guidance, and time-windowed open-alert counts.
+- Regional intensity heatmap combining activity, errors, and latency pressure.
 - Time-range controls for last 1 minute, 5 minutes, 15 minutes, and 1 hour.
 - Overview, Fleet Health, Incidents, and Regions pages powered by Vue Router.
 - Time-windowed active critical and warning counts instead of lifetime cumulative alert counts.
-- Production-style app shell with sidebar navigation, topbar, and compact operations metadata footer.
+- Production-style app shell with collapsible desktop sidebar, mobile navbar, topbar, and compact operations metadata footer.
 - Light dashboard by default with dark mode support.
 - Loading, empty, and error states for resilient operation.
 - Responsive layout for desktop, tablet, and mobile.
@@ -49,6 +51,12 @@ Run type checking only:
 npm run typecheck
 ```
 
+With the dev server running, smoke-check the routed app shell:
+
+```bash
+npm run smoke
+```
+
 ## Folder Structure
 
 ```text
@@ -80,6 +88,7 @@ src/
 Pinia keeps state centralized and extensible:
 
 - `dashboardStore` owns metric series, services, health scores, regions, activity events, filters, dataset visibility, chart mode, and loading/error state.
+- It also tracks acknowledged incident IDs and the selected runbook event so incident actions remain centralized and easy to replace with a real incident API later.
 - `streamStore` owns connection status, heartbeat, reconnect attempts, stream errors, and rejected payload records.
 - `themeStore` owns light/dark mode and applies the selected theme to the document root.
 
@@ -93,6 +102,7 @@ Derived data such as filtered events, active alert counts, and time-range metric
 - ECharts uses stable chart components, `lazyUpdate`, hidden symbols for dense line charts, smooth update animation, and bounded datasets.
 - The activity feed uses TanStack Table for a scalable table model and a scroll container instead of expanding the page indefinitely.
 - The Overview insight panel shows the top active regions while the full Regions page renders the complete regional footprint.
+- The Regions heatmap is computed from already-bounded regional state, so it adds visual signal without adding another growing dataset.
 - Computed selectors keep derived chart/table data out of templates.
 - Components clean up intervals, listeners, animation frames, and timers.
 
@@ -125,6 +135,7 @@ Derived data such as filtered events, active alert counts, and time-range metric
 - Replace the mock stream with a real authenticated WebSocket or Server-Sent Events source.
 - Persist user layout, theme, time range, and dataset preferences.
 - Add incident assignment, acknowledgement, and runbook links.
+- Persist incident acknowledgement state to a backend when connected to a real alerting service.
 - Add chart annotations for deployments, failovers, and security events.
 - Add saved views for SRE, security, revenue operations, and regional teams.
 - Add true row virtualization if the activity feed grows beyond the current bounded live window.

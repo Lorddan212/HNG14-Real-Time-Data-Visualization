@@ -33,6 +33,8 @@ export const useDashboardStore = defineStore('dashboard', {
     } as DashboardFilters,
     visibleDatasets: { ...DEFAULT_VISIBLE_DATASETS } as VisibleDatasets,
     chartMode: 'smooth' as ChartMode,
+    acknowledgedEventIds: [] as string[],
+    selectedRunbookEventId: null as string | null,
     isLoading: true,
     error: null as string | null,
     lastUpdated: null as number | null,
@@ -64,11 +66,28 @@ export const useDashboardStore = defineStore('dashboard', {
     },
     activeCriticalCount: (state) => {
       const cutoff = Date.now() - TIME_RANGES[state.filters.timeRange].value;
-      return state.events.filter((event) => event.timestamp >= cutoff && event.severity === 'critical').length;
+      return state.events.filter(
+        (event) =>
+          event.timestamp >= cutoff &&
+          event.severity === 'critical' &&
+          !state.acknowledgedEventIds.includes(event.id),
+      ).length;
     },
     activeWarningCount: (state) => {
       const cutoff = Date.now() - TIME_RANGES[state.filters.timeRange].value;
-      return state.events.filter((event) => event.timestamp >= cutoff && event.severity === 'warning').length;
+      return state.events.filter(
+        (event) =>
+          event.timestamp >= cutoff &&
+          event.severity === 'warning' &&
+          !state.acknowledgedEventIds.includes(event.id),
+      ).length;
+    },
+    selectedRunbookEvent: (state) => {
+      if (!state.selectedRunbookEventId) {
+        return null;
+      }
+
+      return state.events.find((event) => event.id === state.selectedRunbookEventId) ?? null;
     },
   },
   actions: {
@@ -81,6 +100,8 @@ export const useDashboardStore = defineStore('dashboard', {
       this.lastUpdated = payload.timestamp;
       this.isLoading = false;
       this.error = null;
+      const retainedEventIds = new Set(this.events.map((event) => event.id));
+      this.acknowledgedEventIds = this.acknowledgedEventIds.filter((id) => retainedEventIds.has(id));
     },
     setError(message: string | null) {
       this.error = message;
@@ -88,6 +109,8 @@ export const useDashboardStore = defineStore('dashboard', {
     },
     clearEvents() {
       this.events = [];
+      this.acknowledgedEventIds = [];
+      this.selectedRunbookEventId = null;
     },
     setSeverityFilter(severity: SeverityLevel | 'all') {
       this.filters.severity = severity;
@@ -103,6 +126,18 @@ export const useDashboardStore = defineStore('dashboard', {
     },
     toggleDataset(dataset: DatasetKey) {
       this.visibleDatasets[dataset] = !this.visibleDatasets[dataset];
+    },
+    acknowledgeEvent(eventId: string) {
+      if (!this.acknowledgedEventIds.includes(eventId)) {
+        this.acknowledgedEventIds = [...this.acknowledgedEventIds, eventId];
+      }
+
+      if (this.selectedRunbookEventId === eventId) {
+        this.selectedRunbookEventId = null;
+      }
+    },
+    selectRunbook(eventId: string) {
+      this.selectedRunbookEventId = eventId;
     },
   },
 });

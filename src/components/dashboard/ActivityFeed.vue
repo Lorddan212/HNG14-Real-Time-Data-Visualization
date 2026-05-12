@@ -24,7 +24,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="row in table.getRowModel().rows" :key="row.original.id" class="activity-table__row">
+          <tr
+            v-for="row in table.getRowModel().rows"
+            :key="row.original.id"
+            class="activity-table__row"
+            :class="{ 'activity-table__row--ack': dashboard.acknowledgedEventIds.includes(row.original.id) }"
+          >
             <td v-for="cell in row.getVisibleCells()" :key="cell.id" :data-column="cell.column.id">
               <span
                 v-if="cell.column.id === 'severity'"
@@ -33,6 +38,19 @@
               >
                 {{ row.original.severity }}
               </span>
+              <div v-else-if="cell.column.id === 'actions'" class="activity-actions">
+                <button
+                  class="activity-action"
+                  type="button"
+                  :disabled="!isActionable(row.original) || dashboard.acknowledgedEventIds.includes(row.original.id)"
+                  @click="dashboard.acknowledgeEvent(row.original.id)"
+                >
+                  {{ dashboard.acknowledgedEventIds.includes(row.original.id) ? 'Acked' : 'Ack' }}
+                </button>
+                <button class="activity-action activity-action--primary" type="button" @click="dashboard.selectRunbook(row.original.id)">
+                  Runbook
+                </button>
+              </div>
               <FlexRender v-else :render="cell.column.columnDef.cell" :props="cell.getContext()" />
             </td>
           </tr>
@@ -89,6 +107,11 @@ const columns = [
     header: 'Source',
     cell: (info) => info.getValue(),
   }),
+  columnHelper.display({
+    id: 'actions',
+    header: 'Actions',
+    cell: () => '',
+  }),
 ];
 
 const table = useVueTable({
@@ -98,4 +121,8 @@ const table = useVueTable({
   columns,
   getCoreRowModel: getCoreRowModel(),
 });
+
+function isActionable(event: StreamEvent): boolean {
+  return event.severity === 'critical' || event.severity === 'warning';
+}
 </script>
